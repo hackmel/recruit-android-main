@@ -18,7 +18,8 @@
         tools:replace="android:appComponentFactory">
         <activity
             android:name=".activities.MainActivity"
-            tools:ignore="Instantiatable">
+            tools:ignore="Instantiatable"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

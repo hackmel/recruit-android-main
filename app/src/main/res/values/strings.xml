@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Transactions</string>
+    <string name="Summary_label">Summary</string>
 </resources>
