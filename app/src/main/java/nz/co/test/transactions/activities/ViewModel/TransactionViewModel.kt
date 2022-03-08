@@ -8,10 +8,10 @@ import nz.co.test.transactions.services.TransactionsService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class TransactionViewModel(): ViewModel() {
+class TransactionViewModel @Inject constructor(var transactionService: TransactionsService): ViewModel() {
 
-    lateinit var transactionService: TransactionsService
     private var transactions: MutableLiveData<Array<Transaction>> = MutableLiveData()
     private var selectedTransaction: Transaction? = null
 
@@ -29,7 +29,7 @@ class TransactionViewModel(): ViewModel() {
 
     fun fetchTransactions()  {
 
-            var call : Call<Array<Transaction>>? =  transactionService.retrieveTransactions()
+            val call : Call<Array<Transaction>>? =  transactionService.retrieveTransactions()
 
             call?.enqueue(object: Callback<Array<Transaction>> {
                 override fun onFailure(call: Call<Array<Transaction>>, t: Throwable) {

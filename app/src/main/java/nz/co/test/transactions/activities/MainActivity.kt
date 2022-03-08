@@ -10,17 +10,22 @@ import nz.co.test.transactions.R
 import nz.co.test.transactions.activities.customAdapter.ListCustomAdapter
 import nz.co.test.transactions.activities.ViewModel.TransactionViewModel
 import nz.co.test.transactions.activities.fragments.DetailFragment
+import nz.co.test.transactions.di.DaggerAppComponent
 import nz.co.test.transactions.services.Transaction
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), ItemOnClickListener {
 
-    private lateinit var customAdapter: ListCustomAdapter
+    @Inject
     lateinit var viewModel: TransactionViewModel
+    private lateinit var customAdapter: ListCustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        DaggerAppComponent.create().inject(this)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         val layoutManager = LinearLayoutManager(applicationContext)
