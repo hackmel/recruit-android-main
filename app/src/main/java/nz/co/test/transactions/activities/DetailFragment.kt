@@ -1,7 +1,6 @@
 package nz.co.test.transactions.activities
 
 import android.icu.text.DecimalFormat
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import nz.co.test.transactions.R
 import nz.co.test.transactions.activities.viewmodel.TransactionViewModel
-import java.time.format.DateTimeFormatter
 
 class DetailFragment : Fragment() {
 
@@ -45,8 +43,6 @@ class DetailFragment : Fragment() {
             txtTransactionDate.text = transaction?.transactionDate
             txtGST.text = decimalFormat.format(viewModel.getGSTOfSelectedTransaction())
         }
-
-
 
     }
 

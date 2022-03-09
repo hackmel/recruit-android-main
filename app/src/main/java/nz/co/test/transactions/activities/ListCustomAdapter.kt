@@ -30,13 +30,15 @@ internal class ListCustomAdapter  :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = transactions[position]
+        var itemRowColor = "#6EBF8B"
+
         holder.summary.text = item.summary
 
         if(item.credit > BigDecimal(0) ){
-            holder.itemView.setBackgroundColor(Color.parseColor("#D82148"));
-        }else {
-            holder.itemView.setBackgroundColor(Color.parseColor("#6EBF8B"));
+            itemRowColor = "#D82148";
         }
+
+        holder.itemView.setBackgroundColor(Color.parseColor(itemRowColor));
 
         holder.itemView.setOnClickListener{
             val pos = holder.adapterPosition
@@ -44,8 +46,6 @@ internal class ListCustomAdapter  :
         }
     }
 
-    override fun getItemCount(): Int {
-        return transactions.size
-    }
+    override fun getItemCount(): Int = transactions.size
 }
 

@@ -29,14 +29,14 @@ class TransactionViewModel @Inject constructor(var transactionService: Transacti
         selectedTransaction = transactions.value?.get(index)!!
     }
 
-    fun getSelectedTransaction (): Transaction? {
-        return selectedTransaction
-    }
+    fun getSelectedTransaction (): Transaction? = selectedTransaction
 
     fun getGSTOfSelectedTransaction (): BigDecimal? {
+
         val tax = BigDecimal(.15)
-        if (selectedTransaction!!.debit > BigDecimal(0))
+        if (selectedTransaction!!.debit > BigDecimal(0)) {
             return selectedTransaction?.debit?.multiply(tax)
+        }
 
         return selectedTransaction?.credit?.multiply(tax)
     }

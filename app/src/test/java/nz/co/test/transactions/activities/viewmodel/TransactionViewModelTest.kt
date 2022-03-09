@@ -34,7 +34,7 @@ class TransactionViewModelTest  {
              arrayOf<Transaction>(
                  Transaction(summary = "Test data 1", credit = BigDecimal(20), debit = BigDecimal(2.5), id = 1, transactionDate = "2022-01-01"),
                  Transaction(summary = "Test data 2", credit = BigDecimal(10), debit = BigDecimal(1.5), id = 1, transactionDate = "2022-01-01"),
-                 Transaction(summary = "Test data 3", credit = BigDecimal(5), debit = BigDecimal(3.5), id = 1, transactionDate = "2022-01-01"),
+                 Transaction(summary = "Test data 3", credit = BigDecimal(0), debit = BigDecimal(3.5), id = 1, transactionDate = "2022-01-01"),
          )
          mutableData.postValue(transactions)
          Mockito.`when`(runBlocking { service.retrieveTransactions() }).thenReturn(transactions)
@@ -60,6 +60,15 @@ class TransactionViewModelTest  {
         val selected = viewModel.getSelectedTransaction()
 
         assertEquals(selected, transactions.value?.get(0))
+    }
+
+    @Test
+    fun `should return the correct GST_of_the_selected transaction`() {
+        viewModel.getTransactions()
+        viewModel.selectTransaction(2)
+        val selected = viewModel.getSelectedTransaction()
+
+        assertEquals(viewModel.getGSTOfSelectedTransaction(),selected?.debit?.multiply(BigDecimal(.15)))
     }
 }
 
