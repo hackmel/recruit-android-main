@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.runBlocking
 import nz.co.test.transactions.services.Transaction
 import nz.co.test.transactions.services.TransactionsService
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class TransactionViewModel @Inject constructor(var transactionService: TransactionsService): ViewModel() {
@@ -30,6 +31,14 @@ class TransactionViewModel @Inject constructor(var transactionService: Transacti
 
     fun getSelectedTransaction (): Transaction? {
         return selectedTransaction
+    }
+
+    fun getGSTOfSelectedTransaction (): BigDecimal? {
+        val tax = BigDecimal(.15)
+        if (selectedTransaction!!.debit > BigDecimal(0))
+            return selectedTransaction?.debit?.multiply(tax)
+
+        return selectedTransaction?.credit?.multiply(tax)
     }
 
 

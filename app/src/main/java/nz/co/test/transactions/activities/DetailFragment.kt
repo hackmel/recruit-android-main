@@ -1,5 +1,7 @@
 package nz.co.test.transactions.activities
 
+import android.icu.text.DecimalFormat
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,11 +35,15 @@ class DetailFragment : Fragment() {
 
         val transaction = viewModel.getSelectedTransaction()
 
-        if(transaction != null) {
-            txtSummary.text = transaction.summary
-            txtDebit.text = transaction.debit.toString()
-            txtCredit.text = transaction.credit.toString()
-            txtTransactionDate.text = transaction.transactionDate.format(DateTimeFormatter.BASIC_ISO_DATE)
+        transaction.let {
+
+            val decimalFormat = DecimalFormat("#.##")
+
+            txtSummary.text = transaction?.summary
+            txtDebit.text = transaction?.debit.toString()
+            txtCredit.text = transaction?.credit.toString()
+            txtTransactionDate.text = transaction?.transactionDate
+            txtGST.text = decimalFormat.format(viewModel.getGSTOfSelectedTransaction())
         }
 
 
