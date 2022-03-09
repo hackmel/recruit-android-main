@@ -1,4 +1,4 @@
-package nz.co.test.transactions.activities.customAdapter
+package nz.co.test.transactions.activities.customadapter
 
 import android.view.LayoutInflater
 import android.view.View
