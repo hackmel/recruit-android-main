@@ -7,9 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.R
-import nz.co.test.transactions.activities.customadapter.ListCustomAdapter
 import nz.co.test.transactions.activities.viewmodel.TransactionViewModel
-import nz.co.test.transactions.activities.fragments.DetailFragment
 import nz.co.test.transactions.di.DaggerAppComponent
 import nz.co.test.transactions.services.Transaction
 import javax.inject.Inject
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity(), ItemOnClickListener {
              transactions ->
                  customAdapter.transactions = transactions
                  customAdapter.notifyDataSetChanged()
-         })
+;         })
     }
 
     override fun onClick(view: View, position: Int) {

@@ -15,7 +15,10 @@ class TransactionViewModel @Inject constructor(var transactionService: Transacti
     fun getTransactions (): MutableLiveData<Array<Transaction>> {
         runBlocking {
            val response = transactionService.retrieveTransactions()
-            transactions.postValue(response)
+
+            transactions.postValue(response!!
+                .sortedWith(Comparator { lhs, rhs -> if (lhs.summary < rhs.summary) -1  else 0 })
+                .toTypedArray())
         }
 
         return transactions

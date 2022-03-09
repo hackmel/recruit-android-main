@@ -9,7 +9,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import nz.co.test.transactions.R
-import nz.co.test.transactions.activities.customadapter.ListCustomAdapter
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,5 +1,6 @@
-package nz.co.test.transactions.activities.customadapter
+package nz.co.test.transactions.activities
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +8,8 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.R
-import nz.co.test.transactions.activities.ItemOnClickListener
 import nz.co.test.transactions.services.Transaction
+import java.math.BigDecimal
 
 internal class ListCustomAdapter  :
     RecyclerView.Adapter<ListCustomAdapter.ViewHolder>() {
@@ -30,6 +31,13 @@ internal class ListCustomAdapter  :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = transactions[position]
         holder.summary.text = item.summary
+
+        if(item.credit > BigDecimal(0) ){
+            holder.itemView.setBackgroundColor(Color.parseColor("#D82148"));
+        }else {
+            holder.itemView.setBackgroundColor(Color.parseColor("#6EBF8B"));
+        }
+
         holder.itemView.setOnClickListener{
             val pos = holder.adapterPosition
             onclickEventListener.onClick(holder.itemView, pos)

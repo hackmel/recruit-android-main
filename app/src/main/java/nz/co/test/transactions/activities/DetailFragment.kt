@@ -1,4 +1,4 @@
-package nz.co.test.transactions.activities.fragments
+package nz.co.test.transactions.activities
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import nz.co.test.transactions.R
 import nz.co.test.transactions.activities.viewmodel.TransactionViewModel
+import java.time.format.DateTimeFormatter
 
 class DetailFragment : Fragment() {
 
@@ -25,10 +26,18 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val txtSummary = view.findViewById<TextView>(R.id.detail_summary)
+        val txtDebit = view.findViewById<TextView>(R.id.detail_debit)
+        val txtCredit = view.findViewById<TextView>(R.id.detail_credit)
+        val txtTransactionDate = view.findViewById<TextView>(R.id.detail_transaction_date)
+        val txtGST = view.findViewById<TextView>(R.id.detail_gst)
+
         val transaction = viewModel.getSelectedTransaction()
 
         if(transaction != null) {
             txtSummary.text = transaction.summary
+            txtDebit.text = transaction.debit.toString()
+            txtCredit.text = transaction.credit.toString()
+            txtTransactionDate.text = transaction.transactionDate.format(DateTimeFormatter.BASIC_ISO_DATE)
         }
 
 

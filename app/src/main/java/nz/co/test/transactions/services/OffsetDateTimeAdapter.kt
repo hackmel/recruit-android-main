@@ -7,12 +7,12 @@ import java.time.format.DateTimeFormatter
 object OffsetDateTimeAdapter {
     @ToJson
     fun toJson(value: java.time.OffsetDateTime): String {
-        return DateTimeFormatter.ISO_INSTANT.format(value)
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(value)
     }
 
     @FromJson
     fun fromJson(value: String): java.time.OffsetDateTime {
-        return java.time.OffsetDateTime.parse(value, DateTimeFormatter.ISO_INSTANT)
+        return java.time.OffsetDateTime.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     }
 
 }
