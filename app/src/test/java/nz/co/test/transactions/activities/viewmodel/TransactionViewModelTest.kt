@@ -2,9 +2,15 @@ package nz.co.test.transactions.activities.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
 import nz.co.test.transactions.services.Transaction
 import nz.co.test.transactions.services.TransactionsService
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -15,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import java.math.BigDecimal
 
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class TransactionViewModelTest  {
 
@@ -26,12 +33,17 @@ class TransactionViewModelTest  {
 
     private var mutableData: MutableLiveData<Array<Transaction>> = MutableLiveData()
 
+    @ExperimentalCoroutinesApi
+    private val testDispatcher = TestCoroutineDispatcher()
 
      @Before
      fun setup() {
+
+         Dispatchers.setMain(testDispatcher)
+
          viewModel = TransactionViewModel(service)
          transactions  =
-             arrayOf<Transaction>(
+             arrayOf(
                  Transaction(summary = "Test data 1", credit = BigDecimal(20), debit = BigDecimal(2.5), id = 1, transactionDate = "2022-01-01"),
                  Transaction(summary = "Test data 2", credit = BigDecimal(10), debit = BigDecimal(1.5), id = 1, transactionDate = "2022-01-01"),
                  Transaction(summary = "Test data 3", credit = BigDecimal(0), debit = BigDecimal(3.5), id = 1, transactionDate = "2022-01-01"),
@@ -39,6 +51,13 @@ class TransactionViewModelTest  {
          mutableData.postValue(transactions)
          Mockito.`when`(runBlocking { service.retrieveTransactions() }).thenReturn(transactions)
      }
+
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
 
 
     @Test

@@ -35,10 +35,10 @@ internal class ListCustomAdapter  :
         holder.summary.text = item.summary
 
         if(item.credit > BigDecimal(0) ){
-            itemRowColor = "#D82148";
+            itemRowColor = "#D82148"
         }
 
-        holder.itemView.setBackgroundColor(Color.parseColor(itemRowColor));
+        holder.itemView.setBackgroundColor(Color.parseColor(itemRowColor))
 
         holder.itemView.setOnClickListener{
             val pos = holder.adapterPosition

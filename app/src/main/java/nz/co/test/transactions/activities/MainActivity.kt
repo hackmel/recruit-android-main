@@ -3,13 +3,11 @@ package nz.co.test.transactions.activities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.R
 import nz.co.test.transactions.activities.viewmodel.TransactionViewModel
 import nz.co.test.transactions.di.DaggerAppComponent
-import nz.co.test.transactions.services.Transaction
 import javax.inject.Inject
 
 
@@ -31,15 +29,14 @@ class MainActivity : AppCompatActivity(), ItemOnClickListener {
         recyclerView.layoutManager = layoutManager
         customAdapter = ListCustomAdapter()
         customAdapter.onclickEventListener = this
-        customAdapter.transactions = emptyArray<Transaction>()
+        customAdapter.transactions = emptyArray()
         recyclerView.adapter = customAdapter
 
 
-         viewModel.getTransactions().observe( this, Observer<Array<Transaction>> {
-             transactions ->
-                 customAdapter.transactions = transactions
-                 customAdapter.notifyDataSetChanged()
-;         })
+         viewModel.getTransactions().observe( this) { transactions ->
+             customAdapter.transactions = transactions
+             customAdapter.notifyDataSetChanged()
+         }
     }
 
     override fun onClick(view: View, position: Int) {
@@ -47,7 +44,7 @@ class MainActivity : AppCompatActivity(), ItemOnClickListener {
         val fragment = DetailFragment()
         fragment.viewModel = viewModel
 
-        val activity = view!!.context as AppCompatActivity
+        val activity = view.context as AppCompatActivity
             activity.supportFragmentManager.beginTransaction().apply {
                 replace(R.id.main_activity, fragment)
                 addToBackStack(null)

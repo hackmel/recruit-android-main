@@ -2,7 +2,8 @@ package nz.co.test.transactions.activities.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.runBlocking
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import nz.co.test.transactions.services.Transaction
 import nz.co.test.transactions.services.TransactionsService
 import java.math.BigDecimal
@@ -14,12 +15,12 @@ class TransactionViewModel @Inject constructor(var transactionService: Transacti
     private var selectedTransaction: Transaction? = null
 
     fun getTransactions (): MutableLiveData<Array<Transaction>> {
-        runBlocking {
+         viewModelScope.launch {
            val response = transactionService.retrieveTransactions()
 
-            transactions.postValue(response!!
-                .sortedWith(Comparator { lhs, rhs -> if (lhs.summary < rhs.summary) -1  else 0 })
-                .toTypedArray())
+            transactions.postValue(
+                response
+                .sortedWith { lhs, rhs -> if (lhs.summary < rhs.summary) -1 else 0 }.toTypedArray())
         }
 
         return transactions

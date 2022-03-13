@@ -28,6 +28,9 @@ class MainActivityTest{
 
     @Test
     fun detail_fragment_should_be_displayed_when_an_item_is_selected() {
+
+        Thread.sleep(2000)
+
         onView(withId(R.id.recyclerView)).perform(actionOnItemAtPosition<ListCustomAdapter.ViewHolder>(9,click()))
         onView(withId(R.id.detail_credit)).check(matches(withText("0")))
         onView(withId(R.id.detail_debit)).check(matches(withText("3461.35")))

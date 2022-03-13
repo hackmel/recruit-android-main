@@ -24,11 +24,10 @@ class DaggerAppComponentFactory : AppComponentFactory() {
         intent: Intent?
     ): Activity {
         val activityClass = cl.loadClass(className)
-        if (activityClass == MainActivity::class.java) {
+        return if (activityClass == MainActivity::class.java) {
             val activity = map.getValue(MainActivity::class.java)
-            return activity.get()
-        }
-        else return super.instantiateActivityCompat(cl, className, intent)
+            activity.get()
+        } else super.instantiateActivityCompat(cl, className, intent)
 
     }
 }
